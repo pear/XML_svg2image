@@ -27,10 +27,10 @@
 * @version  $Id$
 * @package  XML
 */
-require_once( "PEAR.php") ;
+require_once("PEAR.php");
 
-class XML_svg2image  {
-
+class XML_svg2image
+{
     /**
     * xsl-file used in this class
     *
@@ -67,7 +67,7 @@ class XML_svg2image  {
     * @var string
     */
     var $renderer = "png";
-    
+
     /**
     * the content-type to be sent if printimage is called.
     *
@@ -75,22 +75,22 @@ class XML_svg2image  {
     " @see printimage()
     */
     var $contenttype = "image/png";
-    
+
     /**
     * the width of the output image, if not set, default values are taken
     *
-    * @var imageWidth 
+    * @var imageWidth
     " @see setImageWidth
     */
-    var $imageWidth = False;
-    
+    var $imageWidth = false;
+
     /**
     * the height of the output image, if not set, default values are taken
     *
-    * @var imageHeight 
+    * @var imageHeight
     " @see setImageHeight
     */
-    var $imageHeight = False;
+    var $imageHeight = false;
 
     /**
     * the quality of the output image, makes only sense with jpegs
@@ -99,15 +99,6 @@ class XML_svg2image  {
     " @see setImageQuality
     */
     var $imageQuality = 0.8;
-    
-    /**
-    * constructor
-    *
-    * @access public
-    */
-    function xml_svg2image ()
-    {
-    }
 
     /**
     * Calls the Main Batik-Transcoder-Java-Programm
@@ -120,46 +111,43 @@ class XML_svg2image  {
     *
     * @param    string  $svg     file input svg-file
     * @param    string  $image    file output image-file
-    * @param    boolean $DelSvg if the svg should be deleted after execution
+    * @param    boolean $delSvg if the svg should be deleted after execution
     * @see runFromString()
     */
-    function run($svg, $image = "", $DelSvg = False)
+    function run($svg, $image = "", $delSvg = false)
     {
-        if (!$image)
+        if (!$image) {
             $image = tempnam($this->tmpdir, $this->tmpimageprefix);
+        }
 
         $this->image = $image;
         $this->svg = $svg;
         $options = array( $this->svg,"-".$this->renderer,$this->image);
-   
-        switch ($this->renderer)
-            {
-                case "jpeg":
-                    $t = new Java("org.apache.batik.transcoder.image.JPEGTranscoder");
-                    $q = new Java ("java.lang.Float",$this->imageQuality);
-                    $t->addTranscodingHint($t->KEY_QUALITY,$q);
-                    break;
-                default:
-                     $t = new Java("org.apache.batik.transcoder.image.PNGTranscoder");
-                     $this->contenttype = "image/png";
-            }
-        // set the transcoding hints            
-        $t->addTranscodingHint($t->KEY_XML_PARSER_CLASSNAME,"org.apache.crimson.parser.XMLReaderImpl");        
 
-        if ($this->imageWidth)
-        {
-                $width = new Java("java.lang.Float",$this->imageWidth);
-                $t->addTranscodingHint($t->KEY_WIDTH, $width);
+        switch ($this->renderer) {
+        case "jpeg":
+            $t = new Java("org.apache.batik.transcoder.image.JPEGTranscoder");
+            $q = new Java ("java.lang.Float",$this->imageQuality);
+            $t->addTranscodingHint($t->KEY_QUALITY,$q);
+            break;
+        default:
+            $t = new Java("org.apache.batik.transcoder.image.PNGTranscoder");
+            $this->contenttype = "image/png";
         }
-        
-        if ($this->imageHeight)
-        {
-                $height = new Java("java.lang.Float",$this->imageHeight);
-                $t->addTranscodingHint($t->KEY_HEIGHT, $height);
+        // set the transcoding hints
+        $t->addTranscodingHint($t->KEY_XML_PARSER_CLASSNAME, "org.apache.crimson.parser.XMLReaderImpl");
+
+        if ($this->imageWidth) {
+            $width = new Java("java.lang.Float",$this->imageWidth);
+            $t->addTranscodingHint($t->KEY_WIDTH, $width);
         }
-        
-        if ($exc = java_last_exception_get()) 
-        {             
+
+        if ($this->imageHeight) {
+            $height = new Java("java.lang.Float",$this->imageHeight);
+            $t->addTranscodingHint($t->KEY_HEIGHT, $height);
+        }
+
+        if ($exc = java_last_exception_get()) {
              java_last_exception_clear();
             return new PEAR_Error($exc->getMessage() ." in ". __FILE__ .":". __LINE__, 11, PEAR_ERROR_RETURN, null, null );
         }
@@ -168,43 +156,40 @@ class XML_svg2image  {
         $svgURI = new Java ("java.io.File",$this->svg);
         $svgURI = $svgURI->toURL();
         $svgURI = $svgURI->toString();
-         
+
         $input = new Java ("org.apache.batik.transcoder.TranscoderInput",$svgURI);
 
-        
-        // create the transcoder output
-        $ostream = @new Java ("java.io.FileOutputStream",$this->image);;
 
-        if ($exc = java_last_exception_get()) 
-        {             
+        // create the transcoder output
+        $ostream = @new Java ("java.io.FileOutputStream",$this->image);
+
+        if ($exc = java_last_exception_get()) {
              java_last_exception_clear();
             return new PEAR_Error($exc->getMessage() ." in ". __FILE__ .":". __LINE__, 11, PEAR_ERROR_RETURN, null, null );
         }
-        
+
         $output = new Java("org.apache.batik.transcoder.TranscoderOutput",$ostream);
-        
+
 // save the image
         @$t->transcode($input, $output);
-         if ($exc = java_last_exception_get()) 
-        {             
+         if ($exc = java_last_exception_get()) {
              java_last_exception_clear();
              return new PEAR_Error($exc->getMessage() ." in ". __FILE__ .":". __LINE__, 11, PEAR_ERROR_RETURN, null, null );
-        }       
-       
+        }
+
 // flush and close the stream then exit
         $ostream->flush();
-        $ostream->close();        
-        if ($exc = java_last_exception_get()) 
-        {             
+        $ostream->close();
+        if ($exc = java_last_exception_get()) {
              java_last_exception_clear();
              return new PEAR_Error($exc->getMessage() ." in ". __FILE__ .":". __LINE__, 11, PEAR_ERROR_RETURN, null, null );
-        }      
-                        
-        if ($DelSvg) {
+        }
+
+        if ($delSvg) {
             $this->deleteSvg($svg);
         }
-        
-        return True;
+
+        return true;
     }
 
     /**
@@ -255,8 +240,10 @@ class XML_svg2image  {
     */
     function deleteImage($image = "")
     {
-        if (!$image)
+        if (!$image) {
             $image = $this->image;
+        }
+
         unlink ($image);
     }
 
@@ -270,8 +257,9 @@ class XML_svg2image  {
     */
     function deleteSvg($svg = "")
     {
-        if (!$svg)
+        if (!$svg) {
             $svg = $this->svg;
+        }
 
         unlink ($svg);
     }
@@ -285,9 +273,9 @@ class XML_svg2image  {
     *
     * @param    string  $image    file output image-file
     * @see returnimage()
-    * @access public    
+    * @access public
     */
-    function  printImage($image = "")
+    function printImage($image = "")
     {
         $image = $this->returnImage($image);
         Header("Content-type: ".$this->contenttype."\nContent-Length: " . strlen($image));
@@ -301,19 +289,20 @@ class XML_svg2image  {
     *
     * @param    string  $image    file output image-file
     * @return   string image
-    * @see run()    
+    * @see run()
     */
     function returnImage($image = "")
-        {
-       if (!$image)
+    {
+       if (!$image) {
            $image = $this->image;
+       }
 
        $fd = fopen($image, "r");
-       $content = fread( $fd, filesize($image) );
+       $content = fread( $fd, filesize($image));
        fclose($fd);
        return $content;
     }
-    
+
     /**
     * sets the rendertype
     *
@@ -321,24 +310,22 @@ class XML_svg2image  {
     * @param    string  $overwriteContentType if the contentType should be set to a approptiate one
     * @see $this-renderer
     * @access public
-    */  
-    
-    function setRenderer($renderer = "png",$overwriteContentType = True)
+    */
+    function setRenderer($renderer = "png",$overwriteContentType = true)
     {
         $this->renderer = $renderer;
         if ($overwriteContentType)
         {
             switch ($renderer)
             {
-                case "jpeg":
-                    $this->contenttype = "image/jpeg";
-                    break;
-                case "png":
-                     $this->contenttype = "image/png";
-                     break;
+            case "jpeg":
+                $this->contenttype = "image/jpeg";
+                break;
+            case "png":
+                 $this->contenttype = "image/png";
+                 break;
             }
         }
-                    
     }
 
     /**
@@ -347,7 +334,7 @@ class XML_svg2image  {
     * @param string $contenttype the content-type for the http-header
     * @see $contenttype
     * @access public
-    */  
+    */
     function setContentType($contenttype = "image/png")
     {
         $this->contenttype = $contenttype;
@@ -359,7 +346,7 @@ class XML_svg2image  {
     * @param string $width the width of the image in pixel
     * @see $setImageWidth
     * @access public
-    */  
+    */
     function setImageWidth($width)
     {
         $this->imageWidth = $width;
@@ -371,7 +358,7 @@ class XML_svg2image  {
     * @param string $height the height of the image in pixel
     * @see $setImageHeight
     * @access public
-    */  
+    */
     function setImageHeight($height)
     {
         $this->imageHeight = $height;
@@ -383,11 +370,10 @@ class XML_svg2image  {
     * @param string $quality the quality of the image in percent (max = 1 min = 0)
     * @see $setImageQuality
     * @access public
-    */  
+    */
     function setImageQuality($quality)
     {
         $this->imageQuality = $quality;
     }
-        
 }
 ?>
