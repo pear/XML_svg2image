@@ -1,0 +1,127 @@
+ svg to image (jpeg and png) converter.
+
+ with svg2image  (svg = scalabe vector graphics, a xml standard defined by the w3c) 
+  it's fairly easy to convert svg files into rasterized formats like png and jpeg.
+  Since not all web browsers support svg-graphics and not all platforms have an 
+  svg-plugins, this class can be useful for converting this graphics into formats
+  everyone supports.
+  
+ An introduction into formating objects can be found at
+  http://www.w3.org/Graphics/SVG/Overview.htm8
+  http://www.adobe.com/svg/main.html
+ A tutorial is here:
+  http://www.adobe.com/svg/tutorial/intro.html
+ 
+ This class uses Batik from the apache consortium. It can be found here:
+  http://xml.apache.org/batik
+  
+ Before you read further, some warnings:
+ 
+ - Batik is written in Java, therefore you need ext/java support for php. 
+    This can be a quite painful task to get it really running. Some articles:
+     http://www.phpbuilder.com/columns/marknold20001221.php3 or
+     http://www.linuxwebdevnews.com/articles/php-java-xslt.php?pid=347
+    Furthermore the whole java stuff is quite ressourcehungry in php. 
+ 
+ - The whole thing seems to be quite slow. it needs on my not very slow machine
+    several seconds to generate an image. Ypu better don't use it for 
+    online-production of the image files, use some caching instead.
+    
+ - Batik says, it recommends jdk 1.3.1 for it. Unfortunately I was only able
+    to get 1.2.2 running with php on my linux box. According to them, it should run 
+    faster on 1.3.1 (which it really does on the commandline), nevertheless
+    it works with 1.2.2 as well.
+
+ - The programm needs an XServer (this is a limitation of the graphics-support
+    in java. See http://www.geocities.com/marcoschmidt.geo/java-image-coding.html
+    for details). Normally webservers don't have Xservers installed, but I made 
+    some good experiences with Xfvb.
+
+
+ Requirements:
+
+  You need Batik (version 1.0 was used for testing) from the xml-apache 
+   project (http://xml.apache.org/batik) and Java (1.1.x or later, i tested 
+   it with 1.2.2 from sun on linux, see the Batik-Docs for details).
+   
+  Furthermore you have to compile your php with --with-java and to adjust
+   your php.ini file. My php.ini file looks the following:
+   ***
+   extension=libphp_java.so
+   extension.dir=/usr/local/lib/php/20010901/
+   [java]
+    java.class.path=/usr/local/lib/php/php_java.jar:/usr/local/share/java/fop.jar:/usr/local/share/java/batik.jar:/usr/share/java/xalan-2.0.1.jar:/usr/share/java/xerces.jar:/usr/local/share/java/jimi-1.0.jar:/usr/share/java/repository/
+   java.library=/usr/lib/java/jre/lib/i386/libjava.so
+   ***
+ 
+ Using this class:
+ 
+ Produce a svg-file from a xml-file with a xsl-stylesheet (or with some other 
+  editors), then feed this class with this svg-file and you get a png/jpeg
+  back (either directly to the browser for really dynamic image production or
+  as a file on your filesystem)
+
+ It is recommended to use the Cache-Classes from PEAR, if you want dynamic
+ image creation, since the process of making the images takes some time. For
+ an example of how to  use Cache and svg2image see below.
+ See also the source code for api-documentation.
+ 
+ Usage:
+
+    require_once("XML/svg2image.php");
+    //make a pdf from simple.fo and save the pdf in a tmp-folder
+    $batik = new xml_svg2image();
+    // the following line are the default settins, so not
+    // necessary here, but you can set it to other values        
+    $batik->setRenderer("png");
+    
+    // you can set some parameters for the file, not necessary
+    $batik->setImageHeight(100);
+    $batik->setImageWidth(100);
+    $batik->setImageQuality(0.8);
+
+     if (PEAR::isError($error = $batik->run("gvt.svg")))
+     {
+        die("batik ERROR: ". $error->getMessage());
+     }
+
+    //print image to the outputbuffer,
+    // including correct Header ("Content-type: application/pdf")
+    $batik->printImage();
+    
+    //delete the temporary image file
+    $batik->deleteImage();
+
+   With Cache:
+    require_once("XML/svg2image.php");    
+    require_once("Cache/Output.php");
+    $container = "file";
+    $options = array("cache_dir"=>"/tmp/");
+    $cache = new Cache_Output("$container",$options);
+    $cache_handle = $cache->generateID($REQUEST_URI);
+    if ($content = $cache->start($cache_handle)) {
+      Header("Content-type: image/png");
+      print $content;
+      die();
+    }
+    
+    $batik = new xml_svg2image();
+     if (PEAR::isError($error = $batik->run("gvt.svg")))
+     {
+        die("batik ERROR: ". $error->getMessage());
+     }
+
+    $batik->printImage();
+    $batik->deleteImage();
+    print $cache->end("+30");
+    
+    
+   If you want to save the image in a file just give the file-name/path
+    as a second argument to the run() method:
+    
+   $batik->run("gvt.svg","image.png");
+   
+   
+If you have any questions to this class or just want to thank me for the 
+great work (*g*), just drop me a mail (chregu@php.net).   
+
