@@ -4,11 +4,12 @@
      generated package.xml files -->
 <package version="1.0">
   <name>XML_svg2image</name>
-  <summary>
+  <summary>Converts a svg  file to a png/jpeg image </summary> 
+<description>
 Converts a svg  file to a png/jpeg image with the help of apache-batik
 (java-program), needs therefore a php with ext/java compiled-in and
 the batik files from http://xml.apache.org/batik
-</summary> 
+</description>
   <maintainers>
     <maintainer>
       <user>chregu</user>
@@ -16,7 +17,10 @@ the batik files from http://xml.apache.org/batik
       <email>chregu@php.net</email>
     </maintainer>
   </maintainers>
+   <license>PHP License</license>
+  
   <release>
+    <state>beta</state>  
     <version>0.1</version>
     <date>2001-09-14</date>
     <notes>
