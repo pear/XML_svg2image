@@ -6,7 +6,7 @@
   <summary>Converts a svg  file to a png/jpeg image with the help of apache-batik (java-program), 
   needs therefore a php with ext/java compiled-in and the batik files from http://xml.apache.org/batik</summary>
   <maintainer>
-    <initials>chregu</initials>
+    <user>chregu</user>
     <name>Christian Stocker</name>
     <email>chregu@php.net</email>
   </maintainer>
