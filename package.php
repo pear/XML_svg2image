@@ -47,7 +47,7 @@ $package->addMaintainer('chregu',  'lead',        'Christian Stocker',      'chr
 
 $package->addDependency('Java',        false, 'has', 'ext', true);
 
-if (isset($_GET['make']) || (isset($_SERVER['argv'][2]) && $_SERVER['argv'][2] == 'make')) { 
+if (isset($_GET['make']) || (isset($_SERVER['argv'][1]) && $_SERVER['argv'][1] == 'make')) { 
     $result = $package->writePackageFile();
 } else {
     $result = $package->debugPackageFile();
