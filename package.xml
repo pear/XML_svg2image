@@ -1,38 +1,51 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
-<!-- do not use the "Type" attribute here, that one is only for
-     generated package.xml files -->
 <package version="1.0">
   <name>XML_svg2image</name>
-  <summary>Converts a svg  file to a png/jpeg image </summary> 
-<description>
-Converts a svg  file to a png/jpeg image with the help of apache-batik
+  <summary>Converts a svg  file to a png/jpeg image</summary>
+  <description>Converts a svg  file to a png/jpeg image with the help of apache-batik
 (java-program), needs therefore a php with ext/java compiled-in and
-the batik files from http://xml.apache.org/batik
-</description>
+the batik files from http://xml.apache.org/batik</description>
   <maintainers>
     <maintainer>
       <user>chregu</user>
       <name>Christian Stocker</name>
       <email>chregu@php.net</email>
+      <role>lead</role>
     </maintainer>
   </maintainers>
-   <license>PHP License</license>
-  
   <release>
-    <state>beta</state>  
-    <version>0.1</version>
-    <date>2001-09-14</date>
-    <notes>
-- tested with batik 1.0
-- has almost the same api as XML_fo2pdf
-    </notes>
+    <version>0.2</version>
+    <date>2004-02-08</date>
+    <license>PHP License</license>
+    <state>beta</state>
+    <notes>* various CS fixes</notes>
+    <deps>
+      <dep type="ext" rel="has" optional="yes">Java</dep>
+    </deps>
     <filelist>
-      <dir name="/" baseinstalldir="XML">
-	<file role="php">svg2image.php</file>
-	<file role="doc">README.svg2image</file>
-	<file role="doc">gvt.svg</file>      
-      </dir>
+      <dir baseinstalldir="/XML/svg2image/" name="/">
+       <file role="data" name="gvt.svg"/>
+       <file role="data" name="README.svg2image"/>
+       <file role="php" name="svg2image.php"/>
+      </dir> <!-- / -->
     </filelist>
   </release>
+  <changelog>
+    <release>
+      <version>0.1</version>
+      <date>2001-09-14</date>
+      <license>PHP License</license>
+      <state>beta</state>
+      <notes>- tested with batik 1.0
+- has almost the same api as XML_fo2pdf</notes>
+    </release>
+    <release>
+      <version>0.2</version>
+      <date>2004-02-08</date>
+      <license>PHP License</license>
+      <state>beta</state>
+      <notes>* various CS fixes</notes>
+    </release>
+  </changelog>
 </package>
