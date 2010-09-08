@@ -1,49 +1,87 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
-<!DOCTYPE package SYSTEM "http://pear.php.net/dtd/package-1.0">
-<package version="1.0">
-  <name>XML_svg2image</name>
-  <summary>Converts a svg  file to a png/jpeg image</summary>
-  <description>Converts a svg  file to a png/jpeg image with the help of apache-batik
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.9.1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+http://pear.php.net/dtd/tasks-1.0.xsd
+http://pear.php.net/dtd/package-2.0
+http://pear.php.net/dtd/package-2.0.xsd">
+ <name>XML_svg2image</name>
+ <channel>pear.php.net</channel>
+ <summary>Converts a svg  file to a png/jpeg image</summary>
+ <description>Converts a svg  file to a png/jpeg image with the help of apache-batik
 (java-program), needs therefore a php with ext/java compiled-in and
-the batik files from http://xml.apache.org/batik</description>
-  <maintainers>
-    <maintainer>
-      <user>chregu</user>
-      <name>Christian Stocker</name>
-      <email>chregu@php.net</email>
-      <role>lead</role>
-    </maintainer>
-  </maintainers>
+the batik files from http://xml.apache.org/batik
+ </description>
+ <lead>
+  <name>Christian Stocker</name>
+  <user>chregu</user>
+  <email>chregu@php.net</email>
+  <active>yes</active>
+ </lead>
+ <date>2010-09-08</date>
+ <time>23:59:04</time>
+ <version>
+  <release>0.2</release>
+  <api>0.2</api>
+ </version>
+ <stability>
+  <release>beta</release>
+  <api>beta</api>
+ </stability>
+ <license uri="http://www.php.net/license">PHP License</license>
+ <notes>
+* various CS fixes
+ </notes>
+ <contents>
+  <dir name="/">
+   <file baseinstalldir="/XML/svg2image/" name="svg2image.php" role="php" />
+  </dir> <!-- / -->
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>4.0.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0b1</min>
+   </pearinstaller>
+  </required>
+  <optional>
+   <extension>
+    <name>Java</name>
+   </extension>
+  </optional>
+ </dependencies>
+ <phprelease />
+ <changelog>
   <release>
-    <version>0.2</version>
-    <date>2004-02-08</date>
-    <license>PHP License</license>
-    <state>beta</state>
-    <notes>* various CS fixes</notes>
-    <deps>
-      <dep type="ext" rel="has" optional="yes">Java</dep>
-    </deps>
-    <filelist>
-      <dir baseinstalldir="/XML/svg2image/" name="/">
-       <file role="php" name="svg2image.php"/>
-      </dir> <!-- / -->
-    </filelist>
+   <version>
+    <release>0.1</release>
+    <api>0.1</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2001-09-14</date>
+   <license uri="http://www.php.net/license">PHP License</license>
+   <notes>
+- tested with batik 1.0
+- has almost the same api as XML_fo2pdf
+   </notes>
   </release>
-  <changelog>
-    <release>
-      <version>0.1</version>
-      <date>2001-09-14</date>
-      <license>PHP License</license>
-      <state>beta</state>
-      <notes>- tested with batik 1.0
-- has almost the same api as XML_fo2pdf</notes>
-    </release>
-    <release>
-      <version>0.2</version>
-      <date>2004-02-08</date>
-      <license>PHP License</license>
-      <state>beta</state>
-      <notes>* various CS fixes</notes>
-    </release>
-  </changelog>
+  <release>
+   <version>
+    <release>0.2</release>
+    <api>0.2</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2004-02-08</date>
+   <license uri="http://www.php.net/license">PHP License</license>
+   <notes>
+* various CS fixes
+   </notes>
+  </release>
+ </changelog>
 </package>
