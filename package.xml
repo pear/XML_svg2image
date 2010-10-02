@@ -1,26 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package packagerversion="1.9.1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
-http://pear.php.net/dtd/tasks-1.0.xsd
-http://pear.php.net/dtd/package-2.0
-http://pear.php.net/dtd/package-2.0.xsd">
+<package packagerversion="1.9.0" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
  <name>XML_svg2image</name>
  <channel>pear.php.net</channel>
  <summary>Converts a svg  file to a png/jpeg image</summary>
  <description>Converts a svg  file to a png/jpeg image with the help of apache-batik
 (java-program), needs therefore a php with ext/java compiled-in and
-the batik files from http://xml.apache.org/batik
- </description>
+the batik files from http://xml.apache.org/batik</description>
  <lead>
   <name>Christian Stocker</name>
   <user>chregu</user>
   <email>chregu@php.net</email>
   <active>yes</active>
  </lead>
- <date>2010-09-08</date>
- <time>23:59:04</time>
+ <date>2010-10-02</date>
+ <time>22:27:24</time>
  <version>
-  <release>0.2</release>
-  <api>0.2</api>
+  <release>0.2.0</release>
+  <api>0.2.0</api>
  </version>
  <stability>
   <release>beta</release>
@@ -28,12 +24,15 @@ the batik files from http://xml.apache.org/batik
  </stability>
  <license uri="http://www.php.net/license">PHP License</license>
  <notes>
-* various CS fixes
+QA release
+Various CS fixes
  </notes>
  <contents>
-  <dir name="/">
-   <file baseinstalldir="/XML/svg2image/" name="svg2image.php" role="php" />
-  </dir> <!-- / -->
+  <dir baseinstalldir="/" name="/">
+   <file baseinstalldir="/" md5sum="a1ca2d76ce6e40c6a3eaadabdfb4a786" name="tests/gvt.svg" role="test" />
+   <file baseinstalldir="/" md5sum="5cb38421b2dd3309866d03d2cef699c7" name="tests/README.svg2image" role="test" />
+   <file baseinstalldir="/" md5sum="0174b6ac427eee921923cd882e7cda0a" name="XML/svg2image.php" role="php" />
+  </dir>
  </contents>
  <dependencies>
   <required>
@@ -41,7 +40,7 @@ the batik files from http://xml.apache.org/batik
     <min>4.0.0</min>
    </php>
    <pearinstaller>
-    <min>1.4.0b1</min>
+    <min>1.5.6</min>
    </pearinstaller>
   </required>
   <optional>
@@ -70,17 +69,18 @@ the batik files from http://xml.apache.org/batik
   </release>
   <release>
    <version>
-    <release>0.2</release>
-    <api>0.2</api>
+    <release>0.2.0</release>
+    <api>0.2.0</api>
    </version>
    <stability>
     <release>beta</release>
     <api>beta</api>
    </stability>
-   <date>2004-02-08</date>
+   <date>2010-10-02</date>
    <license uri="http://www.php.net/license">PHP License</license>
    <notes>
-* various CS fixes
+QA release
+Various CS fixes
    </notes>
   </release>
  </changelog>
