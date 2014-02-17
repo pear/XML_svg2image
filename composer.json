@@ -8,7 +8,7 @@
     ],
     "autoload": {
         "psr-0": {
-            "XML_svg2image": "./"
+            "XML": "./"
         }
     },
     "description": "More info available on: http://pear.php.net/package/XML_svg2image",
