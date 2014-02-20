@@ -1,0 +1,34 @@
+{
+    "authors": [
+        {
+            "email": "chregu@php.net",
+            "name": "Christian Stocker",
+            "role": "Lead"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "XML": "./"
+        }
+    },
+    "description": "More info available on: http://pear.php.net/package/XML_svg2image",
+    "include-path": [
+        "./"
+    ],
+    "license": "PHP License",
+    "name": "pear/xml_svg2image",
+    "support": {
+        "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name[]=XML_svg2image",
+        "source": "https://github.com/pear/XML_svg2image"
+    },
+    "type": "library",
+    "suggest": {
+        "ext-java": "May require the Java PHP extension"
+    },
+    "require": {
+        "pear/pear_exception": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    }
+}
